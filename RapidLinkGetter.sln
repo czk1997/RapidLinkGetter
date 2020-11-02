@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30621.155
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RapidLinkGetter", "RapidLinkGetter\RapidLinkGetter.csproj", "{59BF1074-011C-4BE8-BDCB-E85469C0B508}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{59BF1074-011C-4BE8-BDCB-E85469C0B508}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59BF1074-011C-4BE8-BDCB-E85469C0B508}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59BF1074-011C-4BE8-BDCB-E85469C0B508}.Debug|x64.ActiveCfg = Debug|x64
+		{59BF1074-011C-4BE8-BDCB-E85469C0B508}.Debug|x64.Build.0 = Debug|x64
+		{59BF1074-011C-4BE8-BDCB-E85469C0B508}.Debug|x86.ActiveCfg = Debug|x86
+		{59BF1074-011C-4BE8-BDCB-E85469C0B508}.Debug|x86.Build.0 = Debug|x86
+		{59BF1074-011C-4BE8-BDCB-E85469C0B508}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59BF1074-011C-4BE8-BDCB-E85469C0B508}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59BF1074-011C-4BE8-BDCB-E85469C0B508}.Release|x64.ActiveCfg = Release|x64
+		{59BF1074-011C-4BE8-BDCB-E85469C0B508}.Release|x64.Build.0 = Release|x64
+		{59BF1074-011C-4BE8-BDCB-E85469C0B508}.Release|x86.ActiveCfg = Release|x86
+		{59BF1074-011C-4BE8-BDCB-E85469C0B508}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {50CA017F-A005-46A5-B0A0-9C3C4DB4FFFA}
+	EndGlobalSection
+EndGlobal

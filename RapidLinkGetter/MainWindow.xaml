@@ -1,0 +1,28 @@
+﻿<Window x:Class="RapidLinkGetter.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RapidLinkGetter"
+        xmlns:wpf="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
+        mc:Ignorable="d"
+        Title="秒传链获取器" Height="900" Width="1600">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="94*"/>
+            <ColumnDefinition Width="573*"/>
+            <ColumnDefinition Width="125*"/>
+        </Grid.ColumnDefinitions>
+        <TextBox x:Name="LoginStatus" HorizontalAlignment="Left" Height="23" Margin="91,20,0,0" TextWrapping="Wrap" Text="未登录" VerticalAlignment="Top" Width="120" TextAlignment="Center" Foreground="Red" Grid.ColumnSpan="2"/>
+        <Label Content="登陆状态" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="18,20,0,0"/>
+        <Button Content="登录" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="142,20,0,0" Grid.Column="1" Click="Button_Click"/>
+        <DockPanel Margin="0,108,10,0" Grid.ColumnSpan="3">
+            <Border Grid.Row="1" BorderBrush="Gray" BorderThickness="0,1">
+                <wpf:ChromiumWebBrowser x:Name="Chromium" Address="pan.baidu.com"/>
+            </Border>
+        </DockPanel>
+        <TextBox x:Name="URLTextBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="1023" Margin="18,69,0,0" Grid.ColumnSpan="2" TextChanged="URLTextBox_TextChanged"/>
+        <Button x:Name="ParseButton" Content="Button" Grid.Column="1" HorizontalAlignment="Left" Margin="926,69,0,0" VerticalAlignment="Top" Width="75" Click="ParseButton_Click_1"/>
+        <Button x:Name="GetLinkButton" Grid.ColumnSpan="2" Content="获取秒传链" Grid.Column="1" HorizontalAlignment="Left" Margin="1092,69,0,0" VerticalAlignment="Top" Width="75" Click="GetLinkButton_Click"/>
+    </Grid>
+</Window>
