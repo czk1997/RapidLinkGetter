@@ -43,13 +43,19 @@ namespace RapidLinkGetter
             {
                 setCookie();
             }
-
-             rlw = new RapidLinkWindow();
+            rlw = new RapidLinkWindow();
             proxyObject = new ProxyObject(rlw);
+            this.Closing += MainWindow_Closing;
             Chromium.JavascriptObjectRepository.Register("boundAsync", proxyObject, isAsync: true, options: BindingOptions.DefaultBinder);
             Chromium.FrameLoadEnd += ChromiumOnFrameLoadEnd;
             Chromium.AddressChanged += OnBrowserAddressChange;
         }
+
+        private void MainWindow_Closing(object sender, CancelEventArgs e)
+        {
+           rlw.Close();
+        }
+
         private void ChromiumOnFrameLoadEnd(object sender, FrameLoadEndEventArgs e)
         {
            InjectJS();
@@ -150,6 +156,9 @@ namespace RapidLinkGetter
         {
             getDownLoadURL();
             rlw.ShowDialog();
+            rlw.Close();
+            rlw =new RapidLinkWindow();
+            proxyObject.SetInstance(rlw);
         }
        
         private void OnBrowserAddressChange(object sender, DependencyPropertyChangedEventArgs e)
@@ -176,11 +185,7 @@ namespace RapidLinkGetter
 
             IsLogined();
         }
-        public void OnWindowClosing(object sender, CancelEventArgs e)
-        {
-            // Handle closing logic, set e.Cancel as needed
-            rlw.Close();
-        }
+      
         class CookieMonster : ICookieVisitor
         {
             readonly List<Tuple<string, string>> cookies = new List<Tuple<string, string>>();

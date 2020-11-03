@@ -39,6 +39,7 @@ namespace RapidLinkGetter
                 value => Probar.Value = value;
             progress = new Progress<double>(bindProgress);
             InitializeComponent();
+            WriteLogBox("INFO","等待数据返回中……");
             using (StreamReader sr = new StreamReader("cookies.txt"))
             {
 
@@ -56,21 +57,7 @@ namespace RapidLinkGetter
             }
 
         }
-        bool _shown;
-        protected override void OnContentRendered(EventArgs e)
-        {
-            base.OnContentRendered(e);
 
-            if (_shown)
-                return;
-
-            _shown = true;
-
-            LogBox.Clear();
-            ResultBox.Clear();
-            WriteLogBox("INFO", "等待数据返回中……");
-
-        }
         public void setResultList(String list)
         {
             WriteLogBox("INFO", "获取到浏览器返回数据，分析中……");
@@ -119,18 +106,6 @@ namespace RapidLinkGetter
                 i++;
             }
         }
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            e.Cancel = true;  // cancels the window close    
-            LogBox.Clear();
-            ResultBox.Clear();
-            PCSLinks.Clear();
-            FNList.Clear();
-            finishe = 0;
-            progress.Report(0);
-            this.Hide();      // Programmatically hides the window
-
-        }
 
         public async void GetRapidLinkByPCSLink(int i, string link)
         {
@@ -173,10 +148,10 @@ namespace RapidLinkGetter
                 response.Close();
                 App.Current.Dispatcher.Invoke((Action)(() =>
                 {
-                   ReportProgress(i);
-                   WriteRapidLink(rapidLink.ToString());
+                    ReportProgress(i);
+                    WriteRapidLink(rapidLink.ToString());
                 }));
-                
+
             }
         }
 
@@ -201,6 +176,11 @@ namespace RapidLinkGetter
 
             httpRequest.CookieContainer.Add(cookie);
             return true;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText(ResultBox.Text);
         }
     }
 }

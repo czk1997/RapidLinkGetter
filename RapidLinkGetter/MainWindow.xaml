@@ -8,25 +8,78 @@
         mc:Ignorable="d"
         Title="秒传链获取器" Height="900" Width="1600">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="94*"/>
-            <ColumnDefinition Width="573*"/>
-            <ColumnDefinition Width="125*"/>
-        </Grid.ColumnDefinitions>
-        <TextBox x:Name="LoginStatus" HorizontalAlignment="Left" Height="23" Margin="91,20,0,0" TextWrapping="Wrap" Text="未登录" VerticalAlignment="Top" Width="120" TextAlignment="Center" Foreground="Red" Grid.ColumnSpan="2"/>
-        <Label Content="登陆状态" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="18,20,0,0"/>
-        <Button Content="登录" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="142,20,0,0" Grid.Column="1" Click="Button_Click"/>
-        <DockPanel Margin="0,108,10,0" Grid.ColumnSpan="3">
-            <Border Grid.Row="1" BorderBrush="Gray" BorderThickness="0,1">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="7.5*"></RowDefinition>
+            <RowDefinition Height="7.5*"></RowDefinition>
+            <RowDefinition Height="100*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.07*"></ColumnDefinition>
+                <ColumnDefinition Width="0.1*"></ColumnDefinition>
+                <ColumnDefinition Width="0.01*"></ColumnDefinition>
+                <ColumnDefinition Width="0.1*"></ColumnDefinition>
+                <ColumnDefinition Width="0.7*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0"  Content="登陆状态" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.1*"></RowDefinition>
+                    <RowDefinition Height="0.15*"></RowDefinition>
+                    <RowDefinition Height="0.1*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBox Grid.Row="1" x:Name="LoginStatus"  Text="未登录" TextAlignment="Center" Foreground="Red" VerticalContentAlignment="Center"/>
+            </Grid>
+            <Grid Grid.Column="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.1*"></RowDefinition>
+                    <RowDefinition Height="0.15*"></RowDefinition>
+                    <RowDefinition Height="0.1*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Button Content="登录"  Grid.Row="1"   Click="Button_Click" />
+            </Grid>
+
+        </Grid>
+        <Grid Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.07*"></ColumnDefinition>
+                <ColumnDefinition Width="0.7*"></ColumnDefinition>
+                <ColumnDefinition Width="0.01*"></ColumnDefinition>
+                <ColumnDefinition Width="0.1*"></ColumnDefinition>
+                <ColumnDefinition Width="0.01*"></ColumnDefinition>
+                <ColumnDefinition Width="0.1*"></ColumnDefinition>
+                <ColumnDefinition Width="0.01*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Content="输入链接" VerticalContentAlignment="Center" HorizontalAlignment="Center"></Label>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.1*"></RowDefinition>
+                    <RowDefinition Height="0.15*"></RowDefinition>
+                    <RowDefinition Height="0.1*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBox Grid.Row="1" x:Name="URLTextBox"  TextWrapping="Wrap" TextChanged="URLTextBox_TextChanged" MaxLines="1"/>
+            </Grid>
+            <Grid Grid.Column="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.1*"></RowDefinition>
+                    <RowDefinition Height="0.15*"></RowDefinition>
+                    <RowDefinition Height="0.1*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Button x:Name="ParseButton" Content="打开" Grid.Row="1"   Click="ParseButton_Click_1"/>
+
+            </Grid>
+            <Grid Grid.Column="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.1*"></RowDefinition>
+                    <RowDefinition Height="0.15*"></RowDefinition>
+                    <RowDefinition Height="0.1*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Button x:Name="GetLinkButton" Content="获取秒传链" Grid.Row="1"  Click="GetLinkButton_Click"  />
+            </Grid>
+
+        </Grid>
+        <Border Grid.Row="2" BorderBrush="LightCoral" CornerRadius="10" >
                 <wpf:ChromiumWebBrowser x:Name="Chromium" Address="pan.baidu.com"/>
-            </Border>
-        </DockPanel>
-        <TextBox x:Name="URLTextBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="1023" Margin="18,69,0,0" Grid.ColumnSpan="2" TextChanged="URLTextBox_TextChanged" MaxLines="1">
-            <TextBox.BindingGroup>
-                <BindingGroup/>
-            </TextBox.BindingGroup>
-        </TextBox>
-        <Button x:Name="ParseButton" Content="打开" Grid.Column="1" HorizontalAlignment="Left" Margin="926,69,0,0" VerticalAlignment="Top" Width="75" Click="ParseButton_Click_1"/>
-        <Button x:Name="GetLinkButton" Grid.ColumnSpan="2" Content="获取秒传链" Grid.Column="1" HorizontalAlignment="Left" Margin="1092,69,0,0" VerticalAlignment="Top" Width="75" Click="GetLinkButton_Click"/>
+        </Border>
     </Grid>
 </Window>

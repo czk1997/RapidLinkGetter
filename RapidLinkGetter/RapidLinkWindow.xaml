@@ -7,12 +7,48 @@
         mc:Ignorable="d"
         Title="秒传链" Height="450" Width="800">
     <Grid>
-        <TextBox x:Name="LogBox" HorizontalAlignment="Left" Height="174" TextWrapping="Wrap" VerticalAlignment="Top" Width="792" Margin="0,25,0,0"/>
-        <TextBox x:Name="ResultBox" HorizontalAlignment="Left" Height="160" Margin="0,259,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="792"/>
-        <Label Content="日志" HorizontalAlignment="Left" VerticalAlignment="Top" Width="41"/>
-        <Label Content="进度" HorizontalAlignment="Left" Margin="0,204,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,0.883" Height="25"/>
-        <ProgressBar x:Name="Probar" HorizontalAlignment="Left" Height="25" Margin="39,204,0,0" VerticalAlignment="Top" Width="735"/>
-        <Label Content="结果" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,234,0,0"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.1*"></RowDefinition>
+            <RowDefinition Height="0.5*"></RowDefinition>
+            <RowDefinition Height="0.05*"></RowDefinition>
+            <RowDefinition Height="0.1*"></RowDefinition>
+            <RowDefinition Height="0.1*"></RowDefinition>
+            <RowDefinition Height="0.5*"></RowDefinition>
+
+        </Grid.RowDefinitions>
+        <Label Content="日志" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="41"/>
+        <TextBox Grid.Row="1" x:Name="LogBox" TextWrapping="Wrap"  Margin="0,25,0,0"/>
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.1*"></ColumnDefinition>
+                <ColumnDefinition Width="0.8*"></ColumnDefinition>
+                <ColumnDefinition Width="0.1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Content="进度"  VerticalAlignment="Center" HorizontalAlignment="Center" />
+            <ProgressBar Grid.Column ="1" x:Name="Probar" />
+        </Grid>
+        <Grid Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.1*"></ColumnDefinition>
+                <ColumnDefinition Width="0.8*"></ColumnDefinition>
+                <ColumnDefinition Width="0.1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Content="结果" VerticalAlignment="Center" />
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.1*"></RowDefinition>
+                    <RowDefinition Height="0.5*"></RowDefinition>
+                    <RowDefinition Height="0.1*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Button Grid.Row="1" Content="复制" Click="Button_Click"></Button>
+            </Grid>
+
+        </Grid>
+
+        <TextBox Grid.Row="5" x:Name="ResultBox" TextWrapping="Wrap" />
+
+
+
 
     </Grid>
 </Window>

@@ -15,6 +15,11 @@ namespace RapidLinkGetter
         {
             instance = window;
         }
+
+        public void SetInstance(RapidLinkWindow window)
+        {
+            instance = window;
+        }
         public void showMessage(string msg)
         {//Read Note
 
