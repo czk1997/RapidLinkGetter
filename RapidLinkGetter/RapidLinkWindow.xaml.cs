@@ -7,6 +7,7 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,14 +26,18 @@ namespace RapidLinkGetter
     /// <summary>
     /// RepidLinkWindow.xaml 的交互逻辑
     /// </summary>
-    public delegate void UpdateLinkHandler(string msg);
     public partial class RapidLinkWindow : Window
     {
         List<String> PCSLinks = new List<string>();
         List<String> FNList = new List<string>();
+        private IProgress<double> progress;
         private String BDIDUID;
+        private int finishe = 0;
         public RapidLinkWindow()
         {
+            Action<double> bindProgress =
+                value => Probar.Value = value;
+            progress = new Progress<double>(bindProgress);
             InitializeComponent();
             using (StreamReader sr = new StreamReader("cookies.txt"))
             {
@@ -49,6 +54,7 @@ namespace RapidLinkGetter
                     }
                 }
             }
+
         }
         bool _shown;
         protected override void OnContentRendered(EventArgs e)
@@ -102,14 +108,13 @@ namespace RapidLinkGetter
             var i = 0;
             foreach (var t in PCSLinks)
             {
-                WriteLogBox("INFO", "正在处理第"+(i+1) +"条数据");
                 try
                 {
                     GetRapidLinkByPCSLink(i, t);
                 }
                 catch (Exception e)
                 {
-                    WriteLogBox("ERROR", "出现错误位于+ "+FNList[i]+" ：\n" + e.ToString());
+                    WriteLogBox("ERROR", "出现错误位于+ " + FNList[i] + " ：\n" + e.ToString());
                 }
                 i++;
             }
@@ -121,12 +126,16 @@ namespace RapidLinkGetter
             ResultBox.Clear();
             PCSLinks.Clear();
             FNList.Clear();
+            finishe = 0;
+            progress.Report(0);
             this.Hide();      // Programmatically hides the window
-   
+
         }
 
         public async void GetRapidLinkByPCSLink(int i, string link)
         {
+            WriteLogBox("INFO", "正在处理第" + (i + 1) + "条数据");
+
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(link);
             request.Method = "GET";
             request.UserAgent = "LogStatistic";
@@ -164,11 +173,19 @@ namespace RapidLinkGetter
                 response.Close();
                 App.Current.Dispatcher.Invoke((Action)(() =>
                 {
-                    WriteRapidLink(rapidLink.ToString());
+                   ReportProgress(i);
+                   WriteRapidLink(rapidLink.ToString());
                 }));
+                
             }
         }
-     
+
+        private void ReportProgress(int i)
+        {
+            Interlocked.Increment(ref finishe);
+            double p = (Convert.ToDouble(finishe) / Convert.ToDouble(PCSLinks.Count)) * 100d;
+            progress.Report(p);
+        }
         public static bool TryAddCookie(WebRequest webRequest, Cookie cookie)
         {
             HttpWebRequest httpRequest = webRequest as HttpWebRequest;

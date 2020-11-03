@@ -5,10 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RapidLinkGetter"
         mc:Ignorable="d"
-        Title="RepidLinkWindow" Height="450" Width="800">
+        Title="秒传链" Height="450" Width="800">
     <Grid>
-        <TextBox x:Name="LogBox" HorizontalAlignment="Left" Height="230" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="792"/>
-        <TextBox x:Name="ResultBox" HorizontalAlignment="Left" Height="189" Margin="0,230,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="792"/>
+        <TextBox x:Name="LogBox" HorizontalAlignment="Left" Height="174" TextWrapping="Wrap" VerticalAlignment="Top" Width="792" Margin="0,25,0,0"/>
+        <TextBox x:Name="ResultBox" HorizontalAlignment="Left" Height="160" Margin="0,259,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="792"/>
+        <Label Content="日志" HorizontalAlignment="Left" VerticalAlignment="Top" Width="41"/>
+        <Label Content="进度" HorizontalAlignment="Left" Margin="0,204,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,0.883" Height="25"/>
+        <ProgressBar x:Name="Probar" HorizontalAlignment="Left" Height="25" Margin="39,204,0,0" VerticalAlignment="Top" Width="735"/>
+        <Label Content="结果" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,234,0,0"/>
 
     </Grid>
 </Window>

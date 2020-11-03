@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -30,8 +31,6 @@ namespace RapidLinkGetter
         private RapidLinkWindow rlw;
         public MainWindow()
         {
-            
-           
             CefSettings settings = new CefSettings();
             CefSharpSettings.LegacyJavascriptBindingEnabled = true;
             Cef.Initialize(settings);
@@ -177,6 +176,11 @@ namespace RapidLinkGetter
 
             IsLogined();
         }
+        public void OnWindowClosing(object sender, CancelEventArgs e)
+        {
+            // Handle closing logic, set e.Cancel as needed
+            rlw.Close();
+        }
         class CookieMonster : ICookieVisitor
         {
             readonly List<Tuple<string, string>> cookies = new List<Tuple<string, string>>();
@@ -199,6 +203,7 @@ namespace RapidLinkGetter
                     useAllCookies(cookies);
                 return true;
             }
+           
         }
     }
 }
