@@ -28,7 +28,7 @@ function isSelfShare() {
 
 function getExtra() {
     let seKey = decodeURIComponent(getCookie('BDCLND'));
-    return '{' + '"sekey":"' + seKey + '"' + "}";
+    return `{"sekey":"${seKey}"}`;
 }
 
 function getSelectedFile() {
@@ -127,7 +127,7 @@ function getDownloadLink() {
     if (bdstoken === null) {
         console.log("BDS_TOKEN Error");
     }
-   
+
     fid_list = getFidList(getSelectedFile());
     console.log(fid_list);
     logid = getLogID();

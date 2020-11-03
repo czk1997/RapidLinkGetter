@@ -40,6 +40,14 @@ namespace RapidLinkGetter
             progress = new Progress<double>(bindProgress);
             InitializeComponent();
             WriteLogBox("INFO","等待数据返回中……");
+            if (System.IO.File.Exists("cookies.txt"))
+            {
+                SetBaiduID();
+            }
+        }
+
+        public void SetBaiduID()
+        {
             using (StreamReader sr = new StreamReader("cookies.txt"))
             {
 
@@ -55,8 +63,8 @@ namespace RapidLinkGetter
                     }
                 }
             }
-
         }
+
 
         public void setResultList(String list)
         {
