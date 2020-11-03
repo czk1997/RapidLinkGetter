@@ -9,15 +9,18 @@ namespace RapidLinkGetter
 {
     class ProxyObject
     {
+        private RapidLinkWindow instance;
 
+        public ProxyObject(RapidLinkWindow window)
+        {
+            instance = window;
+        }
         public void showMessage(string msg)
         {//Read Note
 
             App.Current.Dispatcher.Invoke((Action)(() =>
             {
-                Window2 windows = new Window2();
-                windows.setResultList(msg);
-                windows.ShowDialog();
+                instance.setResultList(msg);
             }));
 
         }

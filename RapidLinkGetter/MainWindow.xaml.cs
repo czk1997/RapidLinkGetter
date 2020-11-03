@@ -27,28 +27,34 @@ namespace RapidLinkGetter
     public partial class MainWindow : Window
     {
         private ProxyObject proxyObject;
+        private RapidLinkWindow rlw;
         public MainWindow()
         {
-     
-            proxyObject = new ProxyObject();
+            
+           
             CefSettings settings = new CefSettings();
             CefSharpSettings.LegacyJavascriptBindingEnabled = true;
             Cef.Initialize(settings);
             InitializeComponent();
-            setCookie();
             if (!IsLogined())
             {
                 Login();
             }
+            else
+            {
+                setCookie();
+            }
+
+             rlw = new RapidLinkWindow();
+            proxyObject = new ProxyObject(rlw);
             Chromium.JavascriptObjectRepository.Register("boundAsync", proxyObject, isAsync: true, options: BindingOptions.DefaultBinder);
             Chromium.FrameLoadEnd += ChromiumOnFrameLoadEnd;
+            Chromium.AddressChanged += OnBrowserAddressChange;
         }
-
         private void ChromiumOnFrameLoadEnd(object sender, FrameLoadEndEventArgs e)
         {
            InjectJS();
         }
-
         private void setCookie()
         {
             var cookieManager = Cef.GetGlobalCookieManager();
@@ -77,19 +83,7 @@ namespace RapidLinkGetter
 
         private void Login()
         {
-            Window1 form2 = new Window1();
-            form2.ShowDialog();
-            if (IsLogined())
-            {
-                MessageBox.Show("登陆成功！");
-            }
-            else
-            {
-                MessageBox.Show("不明原因登录失败");
-            }
-            setCookie();
-           
-
+            Chromium.Address = "https://pan.baidu.com";
         }
        
         private Boolean IsLogined()
@@ -107,7 +101,6 @@ namespace RapidLinkGetter
 
                 return true;
             }
-
             return false;
         }
 
@@ -116,13 +109,9 @@ namespace RapidLinkGetter
 
         }
 
-        public void showMessage(String msg)
-        {
-            Window2 window2 = new Window2();
-            window2.setResultList(msg);
-        }
         private void ParseButton_Click_1(object sender, RoutedEventArgs e)
         {
+            
            // Chromium.ShowDevTools();
             string url = URLTextBox.Text;
             string pattern =
@@ -135,17 +124,6 @@ namespace RapidLinkGetter
             }
             Chromium.Address = url;
        
-        }
-        public void setResultList(String list)
-        {
-            JObject j = new JObject(list);
-            if (j["errno"] != null && j["errno"].Value<int>() == 0)
-            {
-                MessageBox.Show("OK");
-            }
-            {
-
-            }
         }
         private async void InjectJS()
         {
@@ -172,7 +150,55 @@ namespace RapidLinkGetter
         private void GetLinkButton_Click(object sender, RoutedEventArgs e)
         {
             getDownLoadURL();
+            rlw.ShowDialog();
+        }
+       
+        private void OnBrowserAddressChange(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            String NewURL = (String)e.NewValue;
+            if (NewURL.Contains("pan.baidu.com/disk/home"))
+            {
+                var visitor = new CookieMonster(all_cookies =>
+                {
+                    var sb = new StringBuilder();
+                    foreach (var nameValue in all_cookies)
+                        sb.AppendLine(nameValue.Item1 + "\x07" + nameValue.Item2);
+                    using (StreamWriter sw = new StreamWriter("cookies.txt"))
+                    {
+                        sw.Write(sb);
+                    }
+                });
+                Cef.GetGlobalCookieManager().VisitAllCookies(visitor);
+            }
+            else
+            {
+                Console.WriteLine(Chromium.Address);
+            }
+
+            IsLogined();
+        }
+        class CookieMonster : ICookieVisitor
+        {
+            readonly List<Tuple<string, string>> cookies = new List<Tuple<string, string>>();
+            readonly Action<IEnumerable<Tuple<string, string>>> useAllCookies;
+
+            public CookieMonster(Action<IEnumerable<Tuple<string, string>>> useAllCookies)
+            {
+                this.useAllCookies = useAllCookies;
+            }
+
+            public void Dispose()
+            {
+
+            }
+
+            public bool Visit(Cookie cookie, int count, int total, ref bool deleteCookie)
+            {
+                cookies.Add(new Tuple<string, string>(cookie.Name, cookie.Value));
+                if (count == total - 1)
+                    useAllCookies(cookies);
+                return true;
+            }
         }
     }
 }
-

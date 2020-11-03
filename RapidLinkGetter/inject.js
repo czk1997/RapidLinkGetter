@@ -117,34 +117,40 @@ function getFidList(fileList) {
     });
     return '[' + fidlist + ']';
 }
+function getSelectedFileLength() {
+    return getSelectedFile().length;
+}
+function isLogined() {
+
+}
 function getDownloadLink() {
     if (bdstoken === null) {
         console.log("BDS_TOKEN Error");
     }
-    if (isSingleShare) {
-        fid_list = getFidList(getSelectedFile());
-        console.log(fid_list);
-        logid = getLogID();
-        let params = new FormData();
-        params.append('encrypt', encrypt);
-        params.append('product', product);
-        params.append('uk', uk);
-        params.append('primaryid', primaryid);
-        params.append('fid_list', fid_list);
+   
+    fid_list = getFidList(getSelectedFile());
+    console.log(fid_list);
+    logid = getLogID();
+    let params = new FormData();
+    params.append('encrypt', encrypt);
+    params.append('product', product);
+    params.append('uk', uk);
+    params.append('primaryid', primaryid);
+    params.append('fid_list', fid_list);
 
-        if (shareType == 'secret') {
-            params.append('extra', extra);
-        }
-        console.log(params);
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', panhelper.p.s + `&sign=${sign}&timestamp=${timestamp}&logid=${logid}`, async = false);
-        xhr.onload = function (e) {
-            if (xhr.status == 200) {
-                boundAsync.showMessage(this.responseText);
-
-            }
-        };
-        xhr.send(params);
-
+    if (shareType == 'secret') {
+        params.append('extra', extra);
     }
+    console.log(params);
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', panhelper.p.s + `&sign=${sign}&timestamp=${timestamp}&logid=${logid}`, async = false);
+    xhr.onload = function (e) {
+        if (xhr.status == 200) {
+            boundAsync.showMessage(this.responseText);
+
+        }
+    };
+    xhr.send(params);
+
+
 }
