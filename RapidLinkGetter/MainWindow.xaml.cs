@@ -31,10 +31,12 @@ namespace RapidLinkGetter
         private RapidLinkWindow rlw;
         public MainWindow()
         {
-            if (System.IO.File.Exists("inject.js"))
+            if (!System.IO.File.Exists("inject.js"))
             {
                 MessageBox.Show("注入文件 inject.js 缺失。请重新下载！");
             }
+            rlw = new RapidLinkWindow();
+            proxyObject = new ProxyObject(rlw);
             CefSettings settings = new CefSettings();
             CefSharpSettings.LegacyJavascriptBindingEnabled = true;
             Cef.Initialize(settings);
@@ -47,8 +49,7 @@ namespace RapidLinkGetter
             {
                 setCookie();
             }
-            rlw = new RapidLinkWindow();
-            proxyObject = new ProxyObject(rlw);
+          
             this.Closing += MainWindow_Closing;
             Chromium.JavascriptObjectRepository.Register("boundAsync", proxyObject, isAsync: true, options: BindingOptions.DefaultBinder);
             Chromium.FrameLoadEnd += ChromiumOnFrameLoadEnd;
